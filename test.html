@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scroll Event Example</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            height: 2000px; /* Just to create enough scrollable content */
+        }
+        .section {
+            height: 500px;
+            margin: 20px;
+            background-color: lightblue;
+            border: 2px solid black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            transition: background-color 0.5s;
+        }
+        .in-viewport {
+            background-color: lightgreen;
+        }
+    </style>
+</head>
+<body>
+    <div class="section" id="section1">Section 1</div>
+    <div class="section" id="section2">Section 2</div>
+    <div class="section" id="section3">Section 3</div>
+
+    <script>
+        const sections = document.querySelectorAll('.section');
+
+        function isInViewport(element) {
+            const rect = element.getBoundingClientRect();
+            return (
+                rect.top >= 0 &&
+                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)
+            );
+        }
+
+        function handleScroll() {
+            sections.forEach(section => {
+                if (isInViewport(section)) {
+                    section.classList.add('in-viewport');
+                } else {
+                    section.classList.remove('in-viewport');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', handleScroll);
+        handleScroll(); // Call initially to check visibility on page load
+    </script>
+</body>
+</html>
